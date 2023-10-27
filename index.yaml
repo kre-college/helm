@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  lms:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-10-27T18:42:18.513535905+03:00"
+    description: A Helm chart for Kubernetes
+    digest: c6dba12db60858d3b1effc13e2125970a06af3e365236c43cacf4fb05abfd99f
+    name: lms
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/lms-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-10-27T18:42:18.513059561+03:00"
