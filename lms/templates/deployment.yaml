@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }} # ATTENTION
+      initContainers:
+        - name: migrations
+          image: {{ .Values.deployment.initContainer.image }}
+          command: ["migrate"]
+          args:
+            - '-path'
+            - '/migrations/'
+            - '-database'
+            - {{ .Values.deployment.initContainer.databaseURL }}
+            - 'up'
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.deployment.container.image }}
+          ports:
+            - containerPort: {{ .Values.deployment.containerPort }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /configs/
+          args:
+            - -config-path
+            - /configs/config.yaml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-configmap
