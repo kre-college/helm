@@ -1,0 +1,60 @@
+{{- if .Values.deployment }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- if .Values.deployment.initContainers }}
+      initContainers:
+        - name: migrations
+          {{- range .Values.deployment.initContainers }}
+          image: {{ .image.repository }}:{{ .image.tag }}
+          command: ["migrate"]
+          args:
+            - '-path'
+            - '/migrations/'
+            - '-database'
+            - {{ .databaseURL }}
+            - 'up'
+          {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.deployment.container.image.repository }}:{{ .Values.deployment.container.image.tag }}
+          {{- if .Values.deployment.container.containerPort }}
+          ports:
+            - containerPort: {{ .Values.deployment.container.containerPort }}
+          {{- end}}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/
+          resources:
+            requests:
+              cpu: {{ .Values.deployment.resources.requests.cpu }}
+              memory: {{ .Values.deployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.deployment.resources.limits.cpu }}
+              memory: {{ .Values.deployment.resources.limits.memory }}
+          args:
+          {{ if eq .Release.Name "rbacgen" }}
+            - -create-admin
+          {{ else }}
+            - -config-path
+            - /config/config.yaml
+          {{ end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-configmap
+{{- end}}

@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-pg-backups
+spec:
+  schedule: {{ .Values.cronJob.schedule | quote}}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: backup-container
+              image: {{ .Values.cronJob.container.image.repository }}:{{ .Values.cronJob.container.image.tag }}
+              env:
+                - name: LMS_NAMESPACE
+                  value: {{ .Values.cronJob.namespace }}
+                - name: BACKUP_DIR
+                  value: {{ .Values.cronJob.backupDir }}
+              volumeMounts:
+                - mountPath: {{ .Values.cronJob.backupDir }}
+                  name: pg-db-data
+          volumes:
+            - name: pg-db-data
+              persistentVolumeClaim:
+                claimName: {{ .Release.Name }}-pg-backups
+          restartPolicy: OnFailure

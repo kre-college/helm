@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-cfg-configmap
+data:
+  {{- with .Values.cfgConfigMap }}
+    {{ .filename }}: {{ .content | quote }}
+  {{- end }}

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  xpack.security.enabled: {{ .Values.configMap.xpack_security_enabled | quote }}
+  discovery.type: {{ .Values.configMap.discovery_type }}

@@ -1,0 +1,17 @@
+{{- if .Values.pvc }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-pg-backups
+  labels:
+    app: {{ .Release.Name }}-postgres
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-postgres
+  resources:
+    requests:
+      storage: {{ .Values.pvc.storage }}
+  accessModes:
+    - ReadWriteOnce
+{{- end }}

@@ -1,0 +1,10 @@
+{{- if .Values.pgConfigMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-pg-conf
+data:
+  POSTGRES_USER: {{ .Values.pgConfigMap.postgresUser }}
+  POSTGRES_PASSWORD: {{ quote .Values.pgConfigMap.postgresPassword }}
+  POSTGRES_DB: {{ .Values.pgConfigMap.postgresDB }}
+{{- end}}
