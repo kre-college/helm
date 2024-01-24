@@ -1,0 +1,10 @@
+{{- if .Values.configMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  {{- with .Values.configMap }}
+    {{ .filename }}: {{ .content | quote }}
+  {{- end }}
+{{- end}}
