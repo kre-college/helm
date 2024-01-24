@@ -1,0 +1,16 @@
+{{- if .Values.pgPVC }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-postgres-pv
+  labels:
+    app: {{ .Release.Name }}-postgres
+spec:
+  capacity:
+    storage: {{ .Values.pgPVC.storage }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/postgres/{{ .Release.Name }}/data
+    type: DirectoryOrCreate
+{{- end }}

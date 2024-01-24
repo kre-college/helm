@@ -17,17 +17,27 @@ spec:
     spec:
       {{- if .Values.deployment.initContainers }}
       initContainers:
-        - name: migrations
-          {{- range .Values.deployment.initContainers }}
+        {{- range .Values.deployment.initContainers }}
+        {{- if eq .name "migrations" }}
+        - name: {{ .name }}
           image: {{ .image.repository }}:{{ .image.tag }}
-          command: ["migrate"]
+          command: [ "migrate" ]
           args:
             - '-path'
             - '/migrations/'
             - '-database'
             - {{ .databaseURL }}
             - 'up'
-          {{- end }}
+        {{- else if eq .name "rbacgen" }}
+        - name: {{ .name }}
+          image: {{ .image.repository }}:{{ .image.tag }}
+          args:
+            - -create-admin
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/
+        {{- end }}
+        {{- end }}
       {{- end }}
       containers:
         - name: {{ .Release.Name }}
