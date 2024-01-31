@@ -3,9 +3,9 @@ entries:
   cronjob:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-27T17:09:06.161107204+02:00"
+    created: "2024-01-26T08:50:27.41294137+02:00"
     description: A Helm chart for Kubernetes
-    digest: 97a7f79895b275eae2165f10816ec95b2c56a2a3308bbf19bb2d4991066f50e2
+    digest: ee31dca9ff6d4fce6e3f9c2af7e8c45daf8865780b8d290ab3d85f8f482bc242
     name: cronjob
     type: application
     urls:
@@ -14,9 +14,9 @@ entries:
   elasticsearch:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-27T17:09:06.161412594+02:00"
+    created: "2024-01-26T08:50:27.413295663+02:00"
     description: A Helm chart for Kubernetes
-    digest: 7115fa662b39a14b122799ae92d39dcd205a5c0dc428515a0779d1df75b80d8d
+    digest: d952752d3c1c76347a8aa18dc3e4de27ddf963ecf5f1b5df5ed02d474dfa5b4b
     name: elasticsearch
     type: application
     urls:
@@ -25,9 +25,9 @@ entries:
   janus-gateway:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-27T17:09:06.161728034+02:00"
+    created: "2024-01-26T08:50:27.41365192+02:00"
     description: A Helm chart for Kubernetes
-    digest: 405cf674ac0f1c214b9239875d7b5cedc2ad3fcff978ddf6106755f68cc244f9
+    digest: 72c656da24f13dd4d2081d46e211b73a5c3e801b7c4c4b7213e70c5fddd1f897
     name: janus-gateway
     type: application
     urls:
@@ -36,9 +36,9 @@ entries:
   kafka:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-27T17:09:06.162026263+02:00"
+    created: "2024-01-26T08:50:27.414003558+02:00"
     description: A Helm chart for Kubernetes
-    digest: aa2a4e1ed5020fe05ee1973f247c3cb7484ced06acc8ca41c7a2f0418af9ec1b
+    digest: 1a34376c83b847c66c0d02641475abbd3450b2a17812897ead6dc8d72ac87a8c
     name: kafka
     type: application
     urls:
@@ -47,20 +47,31 @@ entries:
   lms:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-27T17:09:06.16218819+02:00"
+    created: "2024-01-26T08:50:27.414259645+02:00"
     description: A Helm chart for Kubernetes
-    digest: 45a88ccc055cb97f4016f4e6bd0f19d5d3f6eade6ceed2d45bc13174febd52f6
+    digest: 4c6522eba838eccca8ed4d6ec0d5a84d67f597301a2c2f28c10397090ab3bbc2
     name: lms
     type: application
     urls:
     - https://kre-college.github.io/helm/docs/lms-0.1.0.tgz
     version: 0.1.0
+  rbac:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-01-26T08:50:27.414495543+02:00"
+    description: A Helm chart for Kubernetes
+    digest: f61868970d3bc2516b61ac3c2638375ff4d54519feaf7a56f94cb2f696090ecd
+    name: rbac
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/rbac-0.1.0.tgz
+    version: 0.1.0
   ui:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-27T17:09:06.162486388+02:00"
+    created: "2024-01-26T08:50:27.414871237+02:00"
     description: A Helm chart for Kubernetes
-    digest: c3c4ae7d883ebf15d8005adf517b475654d1991e2763b37a86c27fa294ca0256
+    digest: c4a5ad98d5245d72390baea590053bc8c51bde83a301ac29b7f63a7cf6483dcc
     name: ui
     type: application
     urls:
@@ -69,12 +80,12 @@ entries:
   zookeeper:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-27T17:09:06.162762469+02:00"
+    created: "2024-01-26T08:50:27.415202837+02:00"
     description: A Helm chart for Kubernetes
-    digest: bec285b6ca7f726937baa3ca2623d7d2493f412ddac49c25c4252efbd84707a4
+    digest: 0d4fb31e94a65d8a8477a558dc8acb8afdaacbb1df9e88cb2d072e76011c9432
     name: zookeeper
     type: application
     urls:
     - https://kre-college.github.io/helm/docs/zookeeper-0.1.0.tgz
     version: 0.1.0
-generated: "2023-11-27T17:09:06.160685265+02:00"
+generated: "2024-01-26T08:50:27.412379712+02:00"
