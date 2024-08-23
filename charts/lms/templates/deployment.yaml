@@ -29,6 +29,16 @@ spec:
             - 'up'
           {{- end }}
       {{- end }}
+      {{- if .Values.deployment.toleration }}
+      tolerations:
+        - key: {{ .Values.deployment.toleration.key }}
+          operator: "Equal"
+          value: {{ .Values.deployment.toleration.value }}
+          effect: "NoSchedule"
+      {{- end }}
+      {{- if .Values.deployment.nodeSelector }}
+      nodeSelector: {{ .Values.deployment.nodeSelector }}
+      {{- end }}
       containers:
         - name: {{ .Release.Name }}
           image: {{ .Values.deployment.container.image.repository }}:{{ .Values.deployment.container.image.tag }}
