@@ -9,7 +9,7 @@ entries:
     name: cronjob
     type: application
     urls:
-    - https://kre-college.github.io/helm/docs/docs/cronjob-0.1.0.tgz
+    - https://kre-college.github.io/helm/docs/cronjob-0.1.0.tgz
     version: 0.1.0
   elasticsearch:
   - apiVersion: v2
@@ -20,7 +20,7 @@ entries:
     name: elasticsearch
     type: application
     urls:
-    - https://kre-college.github.io/helm/docs/docs/elasticsearch-0.1.0.tgz
+    - https://kre-college.github.io/helm/docs/elasticsearch-0.1.0.tgz
     version: 0.1.0
   janus-gateway:
   - apiVersion: v2
@@ -31,7 +31,7 @@ entries:
     name: janus-gateway
     type: application
     urls:
-    - https://kre-college.github.io/helm/docs/docs/janus-gateway-0.1.0.tgz
+    - https://kre-college.github.io/helm/docs/janus-gateway-0.1.0.tgz
     version: 0.1.0
   kafka:
   - apiVersion: v2
@@ -42,7 +42,7 @@ entries:
     name: kafka
     type: application
     urls:
-    - https://kre-college.github.io/helm/docs/docs/kafka-0.1.0.tgz
+    - https://kre-college.github.io/helm/docs/kafka-0.1.0.tgz
     version: 0.1.0
   lms:
   - apiVersion: v2
@@ -53,7 +53,7 @@ entries:
     name: lms
     type: application
     urls:
-    - https://kre-college.github.io/helm/docs/docs/lms-0.1.0.tgz
+    - https://kre-college.github.io/helm/docs/lms-0.1.0.tgz
     version: 0.1.0
   rbac:
   - apiVersion: v2
@@ -64,7 +64,7 @@ entries:
     name: rbac
     type: application
     urls:
-    - https://kre-college.github.io/helm/docs/docs/rbac-0.1.0.tgz
+    - https://kre-college.github.io/helm/docs/rbac-0.1.0.tgz
     version: 0.1.0
   ui:
   - apiVersion: v2
@@ -75,7 +75,7 @@ entries:
     name: ui
     type: application
     urls:
-    - https://kre-college.github.io/helm/docs/docs/ui-0.1.0.tgz
+    - https://kre-college.github.io/helm/docs/ui-0.1.0.tgz
     version: 0.1.0
   zookeeper:
   - apiVersion: v2
@@ -86,6 +86,6 @@ entries:
     name: zookeeper
     type: application
     urls:
-    - https://kre-college.github.io/helm/docs/docs/zookeeper-0.1.0.tgz
+    - https://kre-college.github.io/helm/docs/zookeeper-0.1.0.tgz
     version: 0.1.0
 generated: "2024-08-23T16:15:16.816260694+03:00"
