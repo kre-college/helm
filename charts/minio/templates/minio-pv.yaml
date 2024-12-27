@@ -1,0 +1,16 @@
+{{- if .Values.minioPVC }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-pv
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  capacity:
+    storage: {{ .Values.minioPVC.storage }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/{{ .Release.Name }}/data
+    type: DirectoryOrCreate
+{{- end }}

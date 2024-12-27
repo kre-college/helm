@@ -1,0 +1,17 @@
+{{- if .Values.minioPVC }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-pvc
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  resources:
+    requests:
+      storage: {{ .Values.minioPVC.storage }}
+  accessModes:
+    - ReadWriteOnce
+{{- end }}
