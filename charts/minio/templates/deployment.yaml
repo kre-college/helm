@@ -30,10 +30,14 @@ spec:
             limits:
               cpu: {{ .Values.deployment.resources.limits.cpu }}
               memory: {{ .Values.deployment.resources.limits.memory }}
+          {{ if .Values.minioPVC }}
           volumeMounts:
             - name: minio-storage
               mountPath: /data
+          {{ end }}
+      {{ if .Values.minioPVC }}
       volumes:
         - name: minio-storage
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-pvc
+      {{ end }}
