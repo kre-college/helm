@@ -17,6 +17,8 @@ spec:
       containers:
         - name: minio
           image: {{ .Values.deployment.container.image.repository }}:{{ .Values.deployment.container.image.tag }}
+          command: [ "minio" ]
+          args: [ "server", "/data", "--console-address", ":9090" ]
           ports:
             - containerPort: {{ .Values.deployment.container.containerPorts.api.containerPort }}
             - containerPort: {{ .Values.deployment.container.containerPorts.console.containerPort }}
