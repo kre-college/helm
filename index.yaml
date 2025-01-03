@@ -3,7 +3,7 @@ entries:
   cronjob:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.038932209+02:00"
+    created: "2025-01-03T02:05:39.211124118+02:00"
     description: A Helm chart for Kubernetes
     digest: 49cee4b736129e7dec0cc5685b287542cd657506ad5d52837513baa54967d7bb
     name: cronjob
@@ -14,7 +14,7 @@ entries:
   elasticsearch:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.03930875+02:00"
+    created: "2025-01-03T02:05:39.211504121+02:00"
     description: A Helm chart for Kubernetes
     digest: 2692a09dc82691a10fab8b02d94fb49ac0e469ff055dd9ee6ee36869de85ea3b
     name: elasticsearch
@@ -25,7 +25,7 @@ entries:
   janus-gateway:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.039577534+02:00"
+    created: "2025-01-03T02:05:39.211911737+02:00"
     description: A Helm chart for Kubernetes
     digest: b3fabf181766d2f8288cf0bcba3310fe93ca198c6fb97c3bbb4872f468a0b19f
     name: janus-gateway
@@ -36,7 +36,7 @@ entries:
   kafka:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.039825258+02:00"
+    created: "2025-01-03T02:05:39.212254148+02:00"
     description: A Helm chart for Kubernetes
     digest: 3d73d49dd018e9712ad90978748c42c29f7c0c7600175fb145950e9493c06fc3
     name: kafka
@@ -47,7 +47,7 @@ entries:
   lms:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.039975989+02:00"
+    created: "2025-01-03T02:05:39.212448923+02:00"
     description: A Helm chart for Kubernetes
     digest: 3d037f45d93b24cc1151e4ce1c59b414f1e0098b01c90932a232a7f86791a02d
     name: lms
@@ -58,9 +58,9 @@ entries:
   minio:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.040258462+02:00"
+    created: "2025-01-03T02:05:39.212831055+02:00"
     description: A Helm chart for Kubernetes
-    digest: dca56f4db4646629804038f0c0752af10cba83d45f03ed40c838f65fefb6841d
+    digest: a737cd5032718689b9fd1d98b628f62c2df9516fd27db56af14dd4181d0570d9
     name: minio
     type: application
     urls:
@@ -69,7 +69,7 @@ entries:
   rbac:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.040406935+02:00"
+    created: "2025-01-03T02:05:39.213050097+02:00"
     description: A Helm chart for Kubernetes
     digest: 406ee18b0b0d4b295e8cf9cca31016aa1f19fcce5b897c95eb9c6765f4269d96
     name: rbac
@@ -80,7 +80,7 @@ entries:
   ui:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.040604859+02:00"
+    created: "2025-01-03T02:05:39.213389304+02:00"
     description: A Helm chart for Kubernetes
     digest: fca34fbf0ef6882b8f1a3aa6d806c16dae729d91820ff805d231b501a230861e
     name: ui
@@ -91,7 +91,7 @@ entries:
   zookeeper:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-02T22:37:31.040789354+02:00"
+    created: "2025-01-03T02:05:39.213712985+02:00"
     description: A Helm chart for Kubernetes
     digest: 764b57e1617e2d0e55ccc96c353046d89edf010ebeec8e8d94825103abcf7841
     name: zookeeper
@@ -99,4 +99,4 @@ entries:
     urls:
     - https://kre-college.github.io/helm/docs/zookeeper-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-02T22:37:31.037712993+02:00"
+generated: "2025-01-03T02:05:39.210468048+02:00"
