@@ -29,3 +29,12 @@ spec:
             limits:
               cpu: {{ .Values.deployment.resources.limits.cpu }}
               memory: {{ .Values.deployment.resources.limits.memory }}
+          readinessProbe:
+            httpGet:
+              path: /_cluster/health?{{ .Values.clusterHealthCheckParams }}
+              port: 9200
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
