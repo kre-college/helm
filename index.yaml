@@ -3,9 +3,9 @@ entries:
   cronjob:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.211124118+02:00"
+    created: "2025-02-10T17:29:39.992425661+02:00"
     description: A Helm chart for Kubernetes
-    digest: 49cee4b736129e7dec0cc5685b287542cd657506ad5d52837513baa54967d7bb
+    digest: d54278972d424451e1ed9db1a8fcde79e7a84e1d0a6057547d735ad6006bf872
     name: cronjob
     type: application
     urls:
@@ -14,9 +14,9 @@ entries:
   elasticsearch:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.211504121+02:00"
+    created: "2025-02-10T17:29:39.99262969+02:00"
     description: A Helm chart for Kubernetes
-    digest: 2692a09dc82691a10fab8b02d94fb49ac0e469ff055dd9ee6ee36869de85ea3b
+    digest: 19ccb7c33fa5cebd09f2fe06e9e80bc9021ce650429662dde3a709736050a6b9
     name: elasticsearch
     type: application
     urls:
@@ -25,9 +25,9 @@ entries:
   janus-gateway:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.211911737+02:00"
+    created: "2025-02-10T17:29:39.992840527+02:00"
     description: A Helm chart for Kubernetes
-    digest: b3fabf181766d2f8288cf0bcba3310fe93ca198c6fb97c3bbb4872f468a0b19f
+    digest: 090b919ced72375de99597b73af871d07026e111362165864cdbc5f2cad7e638
     name: janus-gateway
     type: application
     urls:
@@ -36,9 +36,9 @@ entries:
   kafka:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.212254148+02:00"
+    created: "2025-02-10T17:29:39.993038594+02:00"
     description: A Helm chart for Kubernetes
-    digest: 3d73d49dd018e9712ad90978748c42c29f7c0c7600175fb145950e9493c06fc3
+    digest: d96fd272e2350491a5ca4545984f1ba0f090e1bc3df6c8da30ba685abe0e15e3
     name: kafka
     type: application
     urls:
@@ -47,9 +47,9 @@ entries:
   lms:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.212448923+02:00"
+    created: "2025-02-10T17:29:39.993168327+02:00"
     description: A Helm chart for Kubernetes
-    digest: 3d037f45d93b24cc1151e4ce1c59b414f1e0098b01c90932a232a7f86791a02d
+    digest: 87f73bd4347fe50db0b0b0ef67e0ed346590084cf2221a2d08ed6c56e16b2bee
     name: lms
     type: application
     urls:
@@ -58,9 +58,9 @@ entries:
   minio:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.212831055+02:00"
+    created: "2025-02-10T17:29:39.994534677+02:00"
     description: A Helm chart for Kubernetes
-    digest: a737cd5032718689b9fd1d98b628f62c2df9516fd27db56af14dd4181d0570d9
+    digest: 3af59c90a672e7b5e8ed57fb1e9b2c4d2c70c8b75fb6bc025aeab46b647265c5
     name: minio
     type: application
     urls:
@@ -69,9 +69,9 @@ entries:
   rbac:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.213050097+02:00"
+    created: "2025-02-10T17:29:39.994856473+02:00"
     description: A Helm chart for Kubernetes
-    digest: 406ee18b0b0d4b295e8cf9cca31016aa1f19fcce5b897c95eb9c6765f4269d96
+    digest: b4cedfab9ed7c3ef734d1fa69db56f976e2e6c2432351ca67f00c5c37a925242
     name: rbac
     type: application
     urls:
@@ -80,9 +80,9 @@ entries:
   ui:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.213389304+02:00"
+    created: "2025-02-10T17:29:39.995339372+02:00"
     description: A Helm chart for Kubernetes
-    digest: fca34fbf0ef6882b8f1a3aa6d806c16dae729d91820ff805d231b501a230861e
+    digest: c8c8cc5cd389bfe9949746dbcba1962f65fd4a2a2ad3d27b9e9094a4d7791058
     name: ui
     type: application
     urls:
@@ -91,12 +91,12 @@ entries:
   zookeeper:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-03T02:05:39.213712985+02:00"
+    created: "2025-02-10T17:29:39.995763587+02:00"
     description: A Helm chart for Kubernetes
-    digest: 764b57e1617e2d0e55ccc96c353046d89edf010ebeec8e8d94825103abcf7841
+    digest: 339ffd638985f0b9793b0f3ca343086d7e74ffa9d88507f4ac0adc0cb5bb5617
     name: zookeeper
     type: application
     urls:
     - https://kre-college.github.io/helm/docs/zookeeper-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-03T02:05:39.210468048+02:00"
+generated: "2025-02-10T17:29:39.992080542+02:00"
