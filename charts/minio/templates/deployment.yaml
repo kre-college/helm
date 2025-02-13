@@ -32,14 +32,24 @@ spec:
             limits:
               cpu: {{ .Values.deployment.resources.limits.cpu }}
               memory: {{ .Values.deployment.resources.limits.memory }}
-          {{ if .Values.minioPVC }}
           volumeMounts:
+          {{ if .Values.minioPVC }}
             - name: minio-storage
               mountPath: /data
           {{ end }}
-      {{ if .Values.minioPVC }}
+          {{ if .Values.hostPath }}
+            - name: local-volume
+              mountPath: /data
+          {{ end }}
       volumes:
+        {{ if .Values.minioPVC }}
         - name: minio-storage
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-pvc
-      {{ end }}
+        {{ end }}
+        {{ if .Values.hostPath }}
+        - name: local-volume
+          hostPath:
+            path: {{ .Values.hostPath.path }}
+            type: Directory
+        {{ end }}
