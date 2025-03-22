@@ -11,6 +11,6 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /mnt/postgres/backups
+    path: /mnt/raid5_mount/postgres/backups
     type: DirectoryOrCreate
 {{- end }}
