@@ -11,6 +11,6 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /mnt/raid5_mount/minio{{ .Release.Name }}/data
+    path: /mnt/raid5_mount/{{ .Release.Name }}/data
     type: DirectoryOrCreate
 {{- end }}
