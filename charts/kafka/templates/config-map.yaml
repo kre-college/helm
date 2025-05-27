@@ -8,6 +8,8 @@ data:
   KAFKA_ZOOKEEPER_CONNECT: {{ .Values.configMap.KAFKA_ZOOKEEPER_CONNECT | quote }}
   KAFKA_MESSAGE_MAX_BYTES: {{ .Values.configMap.KAFKA_MESSAGE_MAX_BYTES | quote }}
   KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: {{ .Values.configMap.KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR | quote }}
-  KAFKA_CREATE_TOPICS_SEPARATOR: {{ .Values.configMap.KAFKA_CREATE_TOPICS_SEPARATOR | quote}}
+  {{- if .Values.configMap.KAFKA_CREATE_TOPICS_SEPARATOR }}
+  KAFKA_CREATE_TOPICS_SEPARATOR: {{ .Values.configMap.KAFKA_CREATE_TOPICS_SEPARATOR | quote }}
+  {{- end }}
   KAFKA_CREATE_TOPICS: |-
-    {{ .Values.configMap.KAFKA_CREATE_TOPICS | quote }}
+    {{ .Values.configMap.KAFKA_CREATE_TOPICS }}
