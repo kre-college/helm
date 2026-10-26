@@ -1,0 +1,113 @@
+{{- if and .Values.pgDeployment .Values.pgUpgrade }}
+{{- $volumes := (fromYaml (include "postgres.volumes" $)).items }}
+{{- $to := index $volumes 0 }}
+{{- $from := index $volumes 1 }}
+{{- $block := printf "rollback-blocked-postgres-%v-data-was-migrated-to-%v.conf" $from.major $to.major }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-pg-upgrade
+data:
+  dump.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    old={{ $from.pgdata }}
+    target=/upgrade/{{ $to.major }}/docker
+    out=/upgrade/upgrade-from-{{ $from.major }}
+    block="include '{{ $block }}'"
+    checkpoint() { gosu postgres pg_controldata "$old" | grep '^Latest checkpoint location:'; }
+    source_changed() { [ -s "$old/PG_VERSION" ] && [ -f "$out/source.checkpoint" ] && [ "$(checkpoint)" != "$(cat "$out/source.checkpoint")" ]; }
+    if [ -s "$target/PG_VERSION" ]; then
+      if [ ! -f "$out/source.checkpoint" ]; then
+        echo "PostgreSQL {{ $to.major }} data in {{ $to.hostPath }} was not created by this migration" >&2
+        exit 1
+      fi
+      if source_changed; then
+        echo "PostgreSQL {{ $from.major }} data changed after it was migrated to PostgreSQL {{ $to.major }}" >&2
+        echo "move {{ $to.hostPath }} away on the node to migrate it again" >&2
+        exit 1
+      fi
+      echo "PostgreSQL $(cat "$target/PG_VERSION") data already present, nothing to dump"
+      exit 0
+    fi
+    if [ -f "$out/dump.done" ] && ! source_changed; then
+      echo "dump of PostgreSQL {{ $from.major }} already taken"
+      exit 0
+    fi
+    rm -f "$out/dump.done"
+    if [ ! -s "$old/PG_VERSION" ]; then
+      echo "no PostgreSQL {{ $from.major }} data found in {{ $from.hostPath }}" >&2
+      echo "check that the volume is mounted on the node, or remove pgUpgrade for a fresh install" >&2
+      exit 1
+    fi
+    if [ "$(cat "$old/PG_VERSION")" != "{{ $from.major }}" ]; then
+      echo "expected PostgreSQL {{ $from.major }} data, found $(cat "$old/PG_VERSION")" >&2
+      exit 1
+    fi
+    grep -vxF "$block" "$old/postgresql.conf" > "$old/postgresql.conf.tmp" || true
+    cat "$old/postgresql.conf.tmp" > "$old/postgresql.conf"
+    rm -f "$old/postgresql.conf.tmp"
+    mkdir -p "$out"
+    chown postgres:postgres /upgrade "$out"
+    stop() { gosu postgres pg_ctl -D "$old" -m fast -w -t 600 stop || true; }
+    gosu postgres pg_ctl -D "$old" -w -t 600 -o "-c listen_addresses='' -c unix_socket_directories=/tmp" start
+    trap stop EXIT
+    gosu postgres pg_dumpall -h /tmp -U "$POSTGRES_USER" | gzip -1 > "$out/dumpall.sql.gz.tmp"
+    stop
+    trap - EXIT
+    mv "$out/dumpall.sql.gz.tmp" "$out/dumpall.sql.gz"
+    checkpoint > "$out/source.checkpoint"
+    touch "$out/dump.done"
+    echo "dumped PostgreSQL {{ $from.major }} to $out/dumpall.sql.gz ($(du -h "$out/dumpall.sql.gz" | cut -f1))"
+  restore.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    target={{ $to.pgdata }}
+    work="$target.restoring"
+    out={{ $to.mountPath }}/upgrade-from-{{ $from.major }}
+    old=/source{{ trimPrefix $from.mountPath $from.pgdata }}
+    block="include '{{ $block }}'"
+    finish() {
+      if [ -s "$old/PG_VERSION" ] && ! grep -qxF "$block" "$old/postgresql.conf"; then
+        printf '\n%s\n' "$block" >> "$old/postgresql.conf"
+        echo "PostgreSQL {{ $from.major }} in {{ $from.hostPath }} will no longer start, see {{ $block }} in its postgresql.conf"
+      fi
+      rm -f "$out/dumpall.sql.gz"
+    }
+    if [ -s "$target/PG_VERSION" ]; then
+      echo "PostgreSQL $(cat "$target/PG_VERSION") data already present, nothing to restore"
+      finish
+      exit 0
+    fi
+    if [ -e "$target" ] && [ -n "$(ls -A "$target")" ]; then
+      echo "$target is not empty but has no PostgreSQL data" >&2
+      echo "move {{ $to.hostPath }}/{{ $to.major }}/docker away on the node to restore into it" >&2
+      exit 1
+    fi
+    if [ ! -f "$out/dump.done" ]; then
+      echo "no dump of PostgreSQL {{ $from.major }} found in $out" >&2
+      exit 1
+    fi
+    rm -rf "$work"
+    mkdir -p "$work"
+    chown -R postgres:postgres "$(dirname "$target")"
+    chmod 700 "$work"
+    printf '%s\n' "$POSTGRES_PASSWORD" > /tmp/pwfile
+    chown postgres:postgres /tmp/pwfile
+    gosu postgres initdb -D "$work" --username="$POSTGRES_USER" --pwfile=/tmp/pwfile
+    rm -f /tmp/pwfile
+    printf 'host all all all scram-sha-256\n' >> "$work/pg_hba.conf"
+    stop() { gosu postgres pg_ctl -D "$work" -m fast -w -t 600 stop || true; }
+    gosu postgres pg_ctl -D "$work" -w -t 600 -o "-c listen_addresses='' -c unix_socket_directories=/tmp" start
+    trap stop EXIT
+    gunzip -c "$out/dumpall.sql.gz" \
+      | awk -v plain="CREATE ROLE ${POSTGRES_USER};" -v quoted="CREATE ROLE \"${POSTGRES_USER//\"/\"\"}\";" '$0 != plain && $0 != quoted' \
+      | gosu postgres psql -h /tmp -U "$POSTGRES_USER" -d postgres -X -q -v ON_ERROR_STOP=1 > /dev/null
+    gosu postgres vacuumdb -h /tmp -U "$POSTGRES_USER" --all --analyze-only
+    stop
+    trap - EXIT
+    rmdir "$target" 2>/dev/null || true
+    mv "$work" "$target"
+    echo "restored PostgreSQL {{ $from.major }} dump into PostgreSQL $(cat "$target/PG_VERSION")"
+    finish
+{{- end }}

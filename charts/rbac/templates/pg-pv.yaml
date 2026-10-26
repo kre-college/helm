@@ -1,16 +1,22 @@
 {{- if .Values.pgPVC }}
+{{- range (fromYaml (include "postgres.volumes" $)).items }}
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Release.Name }}-postgres-pv
+  name: {{ .pv }}
   labels:
-    app: {{ .Release.Name }}-postgres
+    app: {{ .label }}
 spec:
   capacity:
-    storage: {{ .Values.pgPVC.storage }}
+    storage: {{ $.Values.pgPVC.storage }}
   accessModes:
     - ReadWriteOnce
+  {{- if not .legacy }}
+  persistentVolumeReclaimPolicy: Retain
+  {{- end }}
   hostPath:
-    path: /mnt/raid5_mount/postgres/{{ .Release.Name }}/data
+    path: {{ .hostPath }}
     type: DirectoryOrCreate
+{{- end }}
 {{- end }}
