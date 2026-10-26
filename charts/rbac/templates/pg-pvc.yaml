@@ -1,17 +1,23 @@
 {{- if .Values.pgPVC }}
+{{- range (fromYaml (include "postgres.volumes" $)).items }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-postgres-pvc
+  name: {{ .claim }}
   labels:
-    app: {{ .Release.Name }}-postgres
+    app: {{ .label }}
 spec:
+  {{- if not .legacy }}
+  storageClassName: ""
+  {{- end }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-postgres
+      app: {{ .label }}
   resources:
     requests:
-      storage: {{ .Values.pgPVC.storage }}
+      storage: {{ $.Values.pgPVC.storage }}
   accessModes:
     - ReadWriteOnce
+{{- end }}
 {{- end }}

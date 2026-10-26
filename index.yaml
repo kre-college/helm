@@ -47,6 +47,16 @@ entries:
   lms:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-10-26T02:54:28.326657589+02:00"
+    description: A Helm chart for Kubernetes
+    digest: d6fb197e88e8168210f4d0b04ab98859d9fe732e7e79bacc76fc0c9dd9bb4d15
+    name: lms
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/lms-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-03-23T23:54:35.760355207+02:00"
     description: A Helm chart for Kubernetes
     digest: 5d37e2c4fb9fbe3f0cbffada81512c2a131fa35d72bd36bf91683cccf2f8f491
@@ -67,6 +77,16 @@ entries:
     - https://kre-college.github.io/helm/docs/minio-0.1.0.tgz
     version: 0.1.0
   rbac:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-10-26T02:54:28.327378199+02:00"
+    description: A Helm chart for Kubernetes
+    digest: 61f7685014af1ac83c604e62dc6f6cb18c3b03e51a42398e865cc0144c0e991e
+    name: rbac
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/rbac-0.2.0.tgz
+    version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2025-03-23T23:54:35.761050555+02:00"
@@ -99,4 +119,4 @@ entries:
     urls:
     - https://kre-college.github.io/helm/docs/zookeeper-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-23T23:54:35.757899248+02:00"
+generated: "2026-10-24T19:41:58.976969346+03:00"

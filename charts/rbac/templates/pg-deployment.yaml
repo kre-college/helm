@@ -1,4 +1,6 @@
 {{- if .Values.pgDeployment }}
+{{- $volumes := (fromYaml (include "postgres.volumes" $)).items }}
+{{- $data := index $volumes 0 }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,6 +9,9 @@ metadata:
     app: {{ .Release.Name }}-postgres
 spec:
   replicas: {{ .Values.pgDeployment.replicas }}
+  strategy:
+    type: Recreate
+    rollingUpdate: null
   selector:
     matchLabels:
       app: {{ .Release.Name }}-postgres
@@ -15,6 +20,50 @@ spec:
       labels:
         app: {{ .Release.Name }}-postgres
     spec:
+      {{- if and .Values.pgPVC .Values.pgUpgrade }}
+      {{- $from := index $volumes 1 }}
+      initContainers:
+        - name: pg-upgrade-dump
+          image: {{ .Values.pgUpgrade.fromImage.repository }}:{{ .Values.pgUpgrade.fromImage.tag }}
+          command: ["bash", "/scripts/dump.sh"]
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-pg-conf
+          resources:
+            requests:
+              cpu: {{ .Values.pgDeployment.resources.requests.cpu }}
+              memory: {{ .Values.pgDeployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.pgDeployment.resources.limits.cpu }}
+              memory: {{ .Values.pgDeployment.resources.limits.memory }}
+          volumeMounts:
+            - name: {{ $from.name }}
+              mountPath: {{ $from.mountPath }}
+            - name: {{ $data.name }}
+              mountPath: /upgrade
+            - name: pg-upgrade-scripts
+              mountPath: /scripts
+        - name: pg-upgrade-restore
+          image: {{ .Values.pgDeployment.image.repository }}:{{ .Values.pgDeployment.image.tag }}
+          command: ["bash", "/scripts/restore.sh"]
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-pg-conf
+          resources:
+            requests:
+              cpu: {{ .Values.pgDeployment.resources.requests.cpu }}
+              memory: {{ .Values.pgDeployment.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.pgDeployment.resources.limits.cpu }}
+              memory: {{ .Values.pgDeployment.resources.limits.memory }}
+          volumeMounts:
+            - name: {{ $data.name }}
+              mountPath: {{ $data.mountPath }}
+            - name: {{ $from.name }}
+              mountPath: /source
+            - name: pg-upgrade-scripts
+              mountPath: /scripts
+      {{- end }}
       containers:
         - name: {{ .Release.Name }}-postgres
           image: {{ .Values.pgDeployment.image.repository }}:{{ .Values.pgDeployment.image.tag }}
@@ -30,15 +79,22 @@ spec:
             limits:
               cpu: {{ .Values.pgDeployment.resources.limits.cpu }}
               memory: {{ .Values.pgDeployment.resources.limits.memory }}
-          {{ if .Values.pgPVC }}
+          {{- if .Values.pgPVC }}
           volumeMounts:
-            - name: {{ .Release.Name }}-postgres
-              mountPath: /var/lib/postgresql/data
-          {{ end }}
-      {{ if .Values.pgPVC }}
+            - name: {{ $data.name }}
+              mountPath: {{ $data.mountPath }}
+          {{- end }}
+      {{- if .Values.pgPVC }}
       volumes:
-        - name: {{ .Release.Name }}-postgres
+        {{- range $volumes }}
+        - name: {{ .name }}
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-postgres-pvc
-      {{ end }}
+            claimName: {{ .claim }}
+        {{- end }}
+        {{- if .Values.pgUpgrade }}
+        - name: pg-upgrade-scripts
+          configMap:
+            name: {{ .Release.Name }}-pg-upgrade
+        {{- end }}
+      {{- end }}
 {{- end}}
