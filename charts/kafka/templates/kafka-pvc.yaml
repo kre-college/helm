@@ -1,0 +1,18 @@
+{{- if .Values.kafkaPVC }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-pvc
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  storageClassName: ""
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  resources:
+    requests:
+      storage: {{ .Values.kafkaPVC.storage }}
+  accessModes:
+    - ReadWriteOnce
+{{- end }}
