@@ -1,0 +1,17 @@
+{{- if .Values.kafkaPVC }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-pv
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  storageClassName: ""
+  capacity:
+    storage: {{ .Values.kafkaPVC.storage }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/raid5_mount/{{ .Release.Name }}/data
+    type: DirectoryOrCreate
+{{- end }}

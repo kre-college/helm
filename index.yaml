@@ -35,6 +35,16 @@ entries:
     version: 0.1.0
   kafka:
   - apiVersion: v2
+    appVersion: 4.3.1
+    created: "2026-10-26T14:20:21.490444384+02:00"
+    description: A Helm chart for Kubernetes
+    digest: f337507f1bb09b1681a1e81067c95a2f64ee3dc9d5858c9f32f37731e5cf50bf
+    name: kafka
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/kafka-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2025-03-23T23:54:35.760119617+02:00"
     description: A Helm chart for Kubernetes
@@ -119,4 +129,4 @@ entries:
     urls:
     - https://kre-college.github.io/helm/docs/zookeeper-0.1.0.tgz
     version: 0.1.0
-generated: "2026-10-24T19:41:58.976969346+03:00"
+generated: "2026-10-26T14:20:21.489740204+02:00"

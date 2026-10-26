@@ -6,6 +6,8 @@ metadata:
     app: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.deployment.replicas }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: kafka
@@ -13,12 +15,28 @@ spec:
     metadata:
       labels:
         app: kafka
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-map.yaml") . | sha256sum }}
     spec:
+      {{- if .Values.kafkaPVC }}
+      initContainers:
+        - name: volume-permissions
+          image: {{ .Values.deployment.container.image.repository }}:{{ .Values.deployment.container.image.tag }}
+          command: [ "chown", "1000:1000", "/tmp/kafka-logs" ]
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: kafka-storage
+              mountPath: /tmp/kafka-logs
+      {{- end }}
       containers:
         - name: kafka
           image: {{ .Values.deployment.container.image.repository }}:{{ .Values.deployment.container.image.tag }}
           ports:
               - containerPort: {{ .Values.deployment.container.containerPort }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.deployment.container.containerPort }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-configmap
@@ -29,3 +47,14 @@ spec:
             limits:
               cpu: {{ .Values.deployment.resources.limits.cpu }}
               memory: {{ .Values.deployment.resources.limits.memory }}
+          {{- if .Values.kafkaPVC }}
+          volumeMounts:
+            - name: kafka-storage
+              mountPath: /tmp/kafka-logs
+          {{- end }}
+      {{- if .Values.kafkaPVC }}
+      volumes:
+        - name: kafka-storage
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-pvc
+      {{- end }}

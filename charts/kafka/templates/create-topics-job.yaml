@@ -1,0 +1,45 @@
+{{- if .Values.topics }}
+{{- $topics := list }}
+{{- range .Values.topics }}
+{{- $topics = append $topics (printf "%s:%v" .name .partitions) }}
+{{- end }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-create-topics
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  backoffLimit: 5
+  activeDeadlineSeconds: 240
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: create-topics
+          image: {{ .Values.deployment.container.image.repository }}:{{ .Values.deployment.container.image.tag }}
+          env:
+            - name: BOOTSTRAP_SERVER
+              value: {{ printf "%s:%v" .Release.Name .Values.service.port | quote }}
+            - name: TOPICS
+              value: {{ join " " $topics | quote }}
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              KAFKA_TOPICS=/opt/kafka/bin/kafka-topics.sh
+              until described=$("$KAFKA_TOPICS" --bootstrap-server "$BOOTSTRAP_SERVER" --describe 2>/dev/null); do sleep 1; done
+              existing=$(echo "$described" | awk '/PartitionCount:/ { for (i = 1; i < NF; i++) { if ($i == "Topic:") name = $(i + 1); if ($i == "PartitionCount:") count = $(i + 1) } print name ":" count }')
+              for topic in $TOPICS; do
+                name=${topic%%:*}
+                partitions=${topic##*:}
+                current=$(echo "$existing" | awk -F: -v name="$name" '$1 == name { print $2 }')
+                if [ -z "$current" ]; then
+                  "$KAFKA_TOPICS" --bootstrap-server "$BOOTSTRAP_SERVER" --create --if-not-exists --topic "$name" --partitions "$partitions" --replication-factor 1
+                elif [ "$current" -lt "$partitions" ]; then
+                  "$KAFKA_TOPICS" --bootstrap-server "$BOOTSTRAP_SERVER" --alter --topic "$name" --partitions "$partitions"
+                  echo "Increased partitions of $name from $current to $partitions"
+                fi
+              done
+{{- end }}
