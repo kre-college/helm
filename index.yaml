@@ -25,6 +25,16 @@ entries:
   janus-gateway:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-10-28T17:31:47.612450814+02:00"
+    description: A Helm chart for Kubernetes
+    digest: 6a9d5cc1565655ffffda0b7c70d1408a83831ee762bb2a2c144760c4ba375f5d
+    name: janus-gateway
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/janus-gateway-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-03-23T23:54:35.759664193+02:00"
     description: A Helm chart for Kubernetes
     digest: 1c4488cb09a479041596b7c530d8a72b1d6c159396dd051a7190584ff4ef685a
@@ -57,6 +67,16 @@ entries:
   lms:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-10-28T17:31:47.612635088+02:00"
+    description: A Helm chart for Kubernetes
+    digest: 70f26415b930e186cd47b592bc8277a1d43beacd9b4cc9680a2c3e76f08bcccd
+    name: lms
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/lms-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-10-26T02:54:28.326657589+02:00"
     description: A Helm chart for Kubernetes
     digest: d6fb197e88e8168210f4d0b04ab98859d9fe732e7e79bacc76fc0c9dd9bb4d15
@@ -78,6 +98,16 @@ entries:
   minio:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-10-28T17:31:47.612880912+02:00"
+    description: A Helm chart for Kubernetes
+    digest: 6e73b8ebea75d1d4d722408f22432a2d2ff73e34d9e285784b791ec3c0c848a0
+    name: minio
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/minio-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-03-23T23:54:35.760776882+02:00"
     description: A Helm chart for Kubernetes
     digest: 76f6eb0a3c830a6b0e0eaf90cf670445232f275a009837c230d93a39aa992522
@@ -87,6 +117,16 @@ entries:
     - https://kre-college.github.io/helm/docs/minio-0.1.0.tgz
     version: 0.1.0
   rbac:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-10-28T17:31:47.613076551+02:00"
+    description: A Helm chart for Kubernetes
+    digest: 366b877cb9e9591226430962b3fdd381da05092a4275698d8de88c4e6382e254
+    name: rbac
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/rbac-0.3.0.tgz
+    version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2026-10-26T02:54:28.327378199+02:00"
@@ -110,6 +150,16 @@ entries:
   ui:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-10-28T17:31:47.613287119+02:00"
+    description: A Helm chart for Kubernetes
+    digest: cfefa6ed21b3a8cfc12a977fcc1f9d278d0ae4b4c6a34d598a67804f61c0aafc
+    name: ui
+    type: application
+    urls:
+    - https://kre-college.github.io/helm/docs/ui-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-03-23T23:54:35.761504703+02:00"
     description: A Helm chart for Kubernetes
     digest: 365df9152fafd70407e87fddaf7e914ed109db52fe33eaefa3efce8a94b4f67d
@@ -129,4 +179,4 @@ entries:
     urls:
     - https://kre-college.github.io/helm/docs/zookeeper-0.1.0.tgz
     version: 0.1.0
-generated: "2026-10-26T14:20:21.489740204+02:00"
+generated: "2026-10-28T17:31:47.612119486+02:00"

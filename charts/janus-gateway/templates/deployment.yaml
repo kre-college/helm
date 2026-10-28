@@ -21,6 +21,10 @@ spec:
           {{- range .Values.deployment.container.containerPorts }}
             - containerPort: {{ . }}
           {{- end}}
+          readinessProbe:
+            tcpSocket:
+              port: {{ first .Values.deployment.container.containerPorts }}
+            periodSeconds: 5
           volumeMounts:
             - name: config-volume-toml
               mountPath: /etc/janus/

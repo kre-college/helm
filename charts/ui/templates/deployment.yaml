@@ -19,6 +19,10 @@ spec:
           image: {{ .Values.deployment.container.image.repository }}:{{ .Values.deployment.container.image.tag }}
           ports:
             - containerPort: {{ .Values.deployment.container.containerPort }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.deployment.container.containerPort }}
+            periodSeconds: 5
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-configmap

@@ -17,6 +17,14 @@ spec:
     spec:
       {{- if .Values.deployment.initContainers }}
       initContainers:
+        {{- if and .Values.pgDeployment .Values.pgService }}
+        - name: wait-for-postgres
+          image: {{ .Values.pgDeployment.image.repository }}:{{ .Values.pgDeployment.image.tag }}
+          command:
+            - sh
+            - -c
+            - until pg_isready -h {{ .Release.Name }}-postgres -p {{ .Values.pgService.port }}; do sleep 2; done
+        {{- end }}
         - name: migrations
           {{- range .Values.deployment.initContainers }}
           image: {{ .image.repository }}:{{ .image.tag }}
@@ -45,6 +53,10 @@ spec:
           {{- if .Values.deployment.container.containerPort }}
           ports:
             - containerPort: {{ .Values.deployment.container.containerPort }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.deployment.container.containerPort }}
+            periodSeconds: 5
           {{- end}}
           volumeMounts:
             - name: config-volume

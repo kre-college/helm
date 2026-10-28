@@ -6,6 +6,8 @@ metadata:
     app: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.deployment.replicas }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: minio
@@ -22,6 +24,11 @@ spec:
           ports:
             - containerPort: {{ .Values.deployment.container.containerPorts.api.containerPort }}
             - containerPort: {{ .Values.deployment.container.containerPorts.console.containerPort }}
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: {{ .Values.deployment.container.containerPorts.api.containerPort }}
+            periodSeconds: 5
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-configmap
