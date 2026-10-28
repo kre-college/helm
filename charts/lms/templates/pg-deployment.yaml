@@ -69,6 +69,14 @@ spec:
           image: {{ .Values.pgDeployment.image.repository }}:{{ .Values.pgDeployment.image.tag }}
           ports:
               - containerPort: {{ .Values.pgDeployment.containerPort }}
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - pg_isready -h 127.0.0.1 -p {{ .Values.pgDeployment.containerPort }} -U "$POSTGRES_USER"
+            periodSeconds: 5
+            timeoutSeconds: 5
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-pg-conf
